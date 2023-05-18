@@ -1,0 +1,36 @@
+/bayo #  ls -lrt
+total 24
+-rw-r--r-- 1 0 0   67 May 14 23:44 bayodev-ns.yaml
+-rw-r--r-- 1 0 0  326 May 15 01:21 bayo-web-server-ingress.yaml
+-rw-r--r-- 1 0 0   58 May 15 14:11 index.html
+-rw-r--r-- 1 0 0  317 May 15 14:39 bayo-web-server-svc.yaml
+-rw-r--r-- 1 0 0  593 May 15 14:39 bayo-web-server.yaml
+-rw-r--r-- 1 0 0 1315 May 15 19:21 bayo-web-server-combined.yaml
+/bayo # vi bayo-web-server.yaml
+/bayo # vi bayo-web-server.yaml
+/bayo # k apply -f .
+namespace/bayodev configured
+deployment.apps/bayo-web-server configured
+service/bayo-web-server-svc unchanged
+ingress.networking.k8s.io/bayo-web-server-ingress unchanged
+ingress.networking.k8s.io/bayo-web-server-ingress unchanged
+service/bayo-web-server-svc unchanged
+deployment.apps/bayo-web-server unchanged
+namespace/bayodev configured
+/bayo # k get all 
+NAME                                   READY   STATUS    RESTARTS   AGE
+pod/bayo-web-server-857585d4bb-sf5dj   1/1     Running   0          16m
+pod/bayo-web-server-857585d4bb-jp484   1/1     Running   0          6s
+
+NAME                          TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+service/bayo-web-server-svc   NodePort   10.43.217.198   <none>        80:30090/TCP   19h
+
+NAME                              READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/bayo-web-server   2/2     2            2           19h
+
+NAME                                         DESIRED   CURRENT   READY   AGE
+replicaset.apps/bayo-web-server-857585d4bb   2         2         2       4h40m
+/bayo # k get nodes
+NAME                       STATUS   ROLES                  AGE    VERSION
+k3d-seyicluster-server-0   Ready    control-plane,master   2d3h   v1.24.4+k3s1
+/bayo # 

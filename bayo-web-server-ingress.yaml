@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bayo-web-server-ingress
+  namespace: bayodev
+spec:
+  rules:
+  - host: localhost
+    http:
+      paths:
+      - backend:
+          service:
+            name: bayo-web-server-svc
+            port:
+              number: 80
+        path: /
+        pathType: Prefix

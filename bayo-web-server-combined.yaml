@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+  name: bayodev
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: bayo-web-server
+  name: bayo-web-server
+  namespace: bayodev
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: bayo-web-server
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: bayo-web-server
+    spec:
+      containers:
+      - image: k3d-test-app-registry:5050/bayo-nginx:v1
+        imagePullPolicy: IfNotPresent
+        name: bayo-nginx-image
+        ports:
+        - containerPort: 80
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: bayo-web-server-svc
+  name: bayo-web-server-svc
+  namespace: bayodev
+spec:
+  ports:
+  - name: svc-port-mapping
+    nodePort: 30090
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: bayo-web-server
+  sessionAffinity: None
+  type: NodePort
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bayo-web-server-ingress
+  namespace: bayodev
+spec:
+  rules:
+  - host: localhost
+    http:
+      paths:
+      - backend:
+          service:
+            name: bayo-web-server-svc
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
