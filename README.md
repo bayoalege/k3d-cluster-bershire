@@ -14,13 +14,16 @@ docker build -t bayo-nginx:v1 .
 k3d registry create test-app-registry --port 5050
 
 4. Create registries.yaml (file in folder)
+
 mirrors:
 "localhost:5050":
     endpoint:
       - http://k3d-test-app-registry:5050
 
-5. Create new cluster with registy
+5. Create new cluster with registy:
+
 k3d cluster create seyicluster -p "9900:80@loadbalancer" --registry-use k3d-test-app-registry:5050 --registry-config registries.yaml
+
 k3d node edit k3d-seyicluster-serverlb --port-add 80:80
 
 Hint: Ran docker ps to see all port mappings with the load balancer
