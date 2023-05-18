@@ -1,8 +1,8 @@
-Prerequisites Installs:
-1. Installed Chocolatey package manager for Windows
-https://chocolatey.org/install
-2. Installed k3d using Choco
-3. Installed Docker Desktop
+Prerequisites Installs on local desktop:
+1. Installed Chocolatey package manager for Windows:
+   https://chocolatey.org/install
+3. Installed k3d using Choco
+4. Installed Docker Desktop
 
 Installation and Setup:
 1. Create Dockerfile and copy html (pre-created) to the same folder
@@ -32,17 +32,20 @@ Hint: Ran docker ps to see all port mappings with the load balancer
 docker tag bayo-nginx:v1 localhost:5050/bayo-nginx:v1
 docker push localhost:5050/bayo-nginx:v1
 
-7. Create a new deployment and service using node port
+7. Create a new deployment and service using node port:
 
 kubectl create ns bayodev
+
 kubectl create deployment bayo-web-server-deployment --image=k3d-test-app-registry:5050/bayo-nginx:v1 -n bayodev
+
 kubectl create service nodeport bayo-web-server-svc --tcp=80:80 -n bayodev
 
 Note: Converted everything to attached .yaml files
 
 Hint: To switch bayodev namespace as context: "kubectl config set-context --current --namespace=bayodev"
 
-8. Create Ingress resource for service
+8. Create Ingress resource for service:
+
 cat bayo-web-server-ingress.yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -63,7 +66,3 @@ spec:
         pathType: Prefix
 
 kubectl apply -f bayo-web-server-ingress.yaml
-
-
-
-
