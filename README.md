@@ -27,6 +27,7 @@ k3d cluster create seyicluster -p "9900:80@loadbalancer" --registry-use k3d-test
 k3d node edit k3d-seyicluster-serverlb --port-add 80:80
 
 Hint: Ran docker ps to see all port mappings with the load balancer
+
 6. Tag and push the image to the local registry created
 
 docker tag bayo-nginx:v1 localhost:5050/bayo-nginx:v1
