@@ -3,10 +3,17 @@ Prerequisites Installs on local desktop:
    https://chocolatey.org/install
 3. Installed k3d using Choco
 4. Installed Docker Desktop
-Hint: This may be required:
-
+Hint: This may be required as virtual is required for docker engine to work
 PS C:\WINDOWS\system32> bcdedit /set hypervisorlaunchtype auto
 The operation completed successfully.
+
+PS C:\Users\adeba> wsl -l -v
+  NAME                   STATE           VERSION
+* Ubuntu-22.04           Running         2
+  docker-desktop         Running         2
+  docker-desktop-data    Running         2
+PS C:\Users\adeba>
+Note Docker Engine won't stay up until docker-desktop and docker-desktop-data need to be RUNNING - spent time troubleshooting Engine NOT coming
 
 Installation and Setup:
 1. Create Dockerfile and copy html (pre-created) to the same folder
