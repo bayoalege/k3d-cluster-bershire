@@ -3,6 +3,10 @@ Prerequisites Installs on local desktop:
    https://chocolatey.org/install
 3. Installed k3d using Choco
 4. Installed Docker Desktop
+Hint: This may be required:
+
+PS C:\WINDOWS\system32> bcdedit /set hypervisorlaunchtype auto
+The operation completed successfully.
 
 Installation and Setup:
 1. Create Dockerfile and copy html (pre-created) to the same folder
